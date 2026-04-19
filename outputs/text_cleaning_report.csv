@@ -1,0 +1,3 @@
+column,unique_before,unique_after,missing_before,missing_after,changed_records
+ORIENTACAO_SEXUAL,4,4,0,0,0
+RELIGIAO,7,7,0,0,0
