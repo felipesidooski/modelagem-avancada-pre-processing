@@ -192,10 +192,18 @@ Ou desativar a normalizacao.
 
 ## Como Executar
 
+Os caminhos relativos sao resolvidos a partir da pasta do projeto, onde esta o arquivo `main.py`. Assim, os comandos funcionam tanto dentro da pasta do projeto quanto a partir da pasta superior, como acontece no Google Colab apos clonar o repositorio.
+
 Carregar e validar os dados:
 
 ```bash
 python3 main.py --load_data
+```
+
+No Colab, chamando a partir da pasta superior:
+
+```bash
+python3 modelagem-avancada-pre-processing/main.py --load_data
 ```
 
 Apresentar estrutura dos dados:
@@ -204,10 +212,22 @@ Apresentar estrutura dos dados:
 python3 main.py --data_present
 ```
 
+No Colab:
+
+```bash
+python3 modelagem-avancada-pre-processing/main.py --data_present
+```
+
 Executar pre-processamento completo:
 
 ```bash
 python3 main.py --pre-processing
+```
+
+No Colab:
+
+```bash
+python3 modelagem-avancada-pre-processing/main.py --pre-processing
 ```
 
 Executar usando Z-score para tratamento de outliers:
@@ -233,6 +253,8 @@ Definir arquivo de entrada e diretorio de saida:
 ```bash
 python3 main.py --data_path train.csv --output_dir outputs --pre-processing
 ```
+
+Quando `--data_path` ou `--output_dir` forem relativos, eles serao interpretados a partir da pasta `modelagem-avancada-pre-processing`. Caminhos absolutos tambem sao aceitos.
 
 ## Arquivos Gerados
 

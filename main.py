@@ -1,8 +1,30 @@
+"""Command-line entrypoint for data cleanup and normalization."""
+
 import argparse
+from pathlib import Path
 
 from data_loader import DataLoader
 from data_preprocessor import DataPreprocessor
 from data_presenter import DataPresenter
+
+
+PROJECT_ROOT = Path(__file__).resolve().parent
+
+
+def resolve_project_path(path_value: str) -> Path:
+    """Resolves paths using the project directory as the default base.
+
+    Args:
+        path_value: Absolute or relative path provided through the CLI.
+
+    Returns:
+        Absolute path. Relative paths are resolved from the directory where
+        this main.py file is located.
+    """
+    path = Path(path_value)
+    if path.is_absolute():
+        return path
+    return PROJECT_ROOT / path
 
 
 def parse_args() -> argparse.Namespace:
@@ -65,7 +87,13 @@ def main() -> None:
         print("Nenhuma etapa selecionada. Use --load_data, --data_present ou --pre-processing.")
         return
 
-    loader = DataLoader(args.data_path)
+    data_path = resolve_project_path(args.data_path)
+    output_dir = resolve_project_path(args.output_dir)
+
+    print(f"Base do projeto: {PROJECT_ROOT}")
+    print(f"Arquivo de entrada: {data_path}")
+
+    loader = DataLoader(str(data_path))
     df = loader.load_data()
 
     if args.load_data:
@@ -84,7 +112,7 @@ def main() -> None:
         )
         preprocessor.preprocess(outlier_method=args.outlier_method)
         preprocessor.print_report_summary()
-        preprocessor.save_outputs(output_dir=args.output_dir)
+        preprocessor.save_outputs(output_dir=str(output_dir))
 
 
 if __name__ == "__main__":
